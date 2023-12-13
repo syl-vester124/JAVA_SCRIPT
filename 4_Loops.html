@@ -1,0 +1,74 @@
+<html>
+<head>
+    <title>JS - Loops - Practice</title>
+
+    <script type="text/javascript">
+
+        //Function which will be executed on page Load (set on body load), we can consider it as our Main entry point
+        function MainFunction() {
+
+            var a = 0;
+
+            //For loop, Initialization, Condition, Inc/Dec
+            for (a = 0; a < 10; a++)
+            {
+                document.writeln('value of a is:' + a);
+            }
+
+            //For loop
+            for (var b = 5; b > 0; b--) {
+                document.writeln('value of b is:' + b);
+            }
+
+            b = 0;
+            //While loop
+            while (b <= 10)
+            {
+                document.writeln('value of b is:' + b);
+                b++;
+            }
+
+            b = 0;
+            //do While loop
+            do {
+                document.writeln('value of b is:' + b);
+                b++;
+                if (b == 3)
+                {
+                    break;
+                }
+                //
+
+            } while (b <= 10);
+
+
+            //Create an array object
+            var arr = new Array();
+
+            //Add some data to array
+            arr[0] = 1;
+            arr[1] = 2;
+            arr[2] = 3;
+
+            //Iterate array in loop, it iterates whole array and executes loop cycle for every element
+            for(var val in arr)
+            {
+                document.writeln('value in array: ' + val);
+            }
+
+            //Get values from array in loop (length is property of Array object)
+            for (var i = 0; i < arr.length; i++) {
+                var val = arr[i];
+                document.writeln('value in array: ' + val);
+            }
+
+
+        }//End of MainFunction
+
+    </script>
+</head>
+
+<body onload="return MainFunction()">
+</body>
+
+</html>

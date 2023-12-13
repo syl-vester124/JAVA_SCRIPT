@@ -1,0 +1,149 @@
+<html>
+<head>
+    <title>JS - Conditional - Practice</title>
+
+    <script type="text/javascript">
+
+        //Function which will be executed on page Load (set on body load), we can consider it as our Main entry point
+        function MainFunction() {
+
+            //Declare variables for testing purposes
+            var a = 10;
+            var b = 3;
+            var marks = 60;
+
+            /*Arithmatic Operators
+             + (plus)
+             - (subtraction)
+             * (multiply)
+             / (divide)
+             % (remainder)
+            */
+            var r = a + b;
+            WriteLine('a + b:' + r);
+
+            r = a - b;
+            WriteLine('a - b:' + r);
+
+            r = a * b;
+            WriteLine('a * b:' + r);
+
+            r = a / b;
+            WriteLine('a / b:' + r);
+
+            r = a % b;
+            WriteLine('a % b:' + r);
+
+
+            /*Comparisions Operators
+             == 'equal to'
+             != 'not equal to'
+             > 'greater than'
+             < 'less than'
+             >= 'greater than or equal to'
+             <= 'less than or equal to'
+            */
+
+            if (a == b) {
+                WriteLine('a is equal to b');
+            }
+
+            if (a === b) {
+                WriteLine('a is equal to b');
+            }
+
+            if (a != b) {
+                WriteLine('a is equal to b');
+            }
+
+            if (a > b) {
+                WriteLine('a is greater than b');
+            }
+            else {
+                WriteLine('a is not greater than b');
+            }
+
+            /* Logical Operators
+            
+            && (And)
+            || (OR)
+            ! (NOT)
+
+            */
+            if(obj)
+            {
+
+            }
+            if (a >= 90 && a <= 100) {
+                WriteLine('Grade is A+');
+            }
+            else if (a >= 80 && a < 90) {
+                WriteLine('Grade is A');
+            }
+            else if (a >= 70 && a < 80) {
+                WriteLine('Grade is B');
+            }
+            else if (a >= 60 && a < 70) {
+                WriteLine('Grade is C');
+            }
+            else if (a >= 50 && a < 60) {
+                WriteLine('Grade is D');
+            }
+            else {
+                WriteLine('Grade is F');
+            }
+            
+            var name = "test";
+            var flag = true;
+
+            //String match (use of OR operator)
+            if (name == "test1" || name == "test2")
+            {
+                WriteLine('matached');
+            }
+
+            //Boolean match
+            if (flag == true) {
+                WriteLine('flag matached');
+            }
+
+            //Convert a string/object to Boolean value
+            if (name) //If name is null or "" or undefined, if will evaluate it to false otherwise true
+            {
+                WriteLine('valid');
+            }
+
+            //Ternary/Conditional operator
+            var result = (flag == true ? "Hello World" : "Else Hello World");
+            WriteLine("Result of Ternary operator : " + result);
+
+
+            //== vs ===
+            //both behaves same, == doesn't apply any 'type' check but === does
+
+            flag = (1 == "1"); 
+            WriteLine('1 == "1" : ' + flag);
+
+            flag = (1 === "1");
+            WriteLine('1 === "1" : ' + flag);
+
+
+        }//End of MainFunction
+
+
+        //A wrapper function to write every new line, this function returns 'undefined'
+        function WriteLine(str) {
+
+            //Write given data using 'document' 'writeln' function
+            document.writeln(str);
+
+            //Write '</br>' to insert a new line in HTML
+            document.write("</br>");
+        }
+    </script>
+</head>
+
+<body onload="return MainFunction()">
+</body>
+
+</html>

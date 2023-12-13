@@ -1,0 +1,182 @@
+<html>
+<head>
+    <title>JS - Functions - Practice</title>
+
+    <script type="text/javascript">
+
+        /*
+            -> In JS, Function is written with 'function' key word 
+            -> It defines no return type,
+            -> Parameters also don't have any data type
+            -> A function which doesn't return anything explicitly, it returns 'undefined'
+            -> Variable declared inside function has scope inside function
+            -> No function overloading in JS, means there can't be two or more functions with same Name
+            -> In every function, a predefined array like object 'arguments' is available. This contains 
+                all parameters passed to this function during call
+            -> function is also 'Object' of type 'Function'
+        */
+
+        //A wrapper function to write every new line, this function returns 'undefined'
+        function WriteLine(str) {
+
+            //Write given data using 'document' 'writeln' function
+            document.writeln(str);
+
+            //Write '</br>' to insert a new line in HTML
+            document.write("</br>");
+        }
+
+        function Sum(a,b)
+        {
+            /*Every functions has an implicit variable 'arguments' available
+            This is array alike structure and contains all the agruments passed to this
+            function while calling
+            */
+
+            WriteLine('arguments passed to this function are :' + arguments.length);
+
+            var arg = arguments.length;
+            var result = 0;
+            for (var i = 0; i < arg; i++)
+            {
+                result = result + arguments[i];
+            }
+            
+            return result;
+        }
+
+        //In JS, a function can contain another function 
+        //but inner function can be used inside its containing function
+
+        function OuterFunc()
+        {
+            WriteLine('OuterFunc is called');
+
+            var a = 0;
+
+            //Create a nested function like other statements of function
+            function InnerFunc()
+            {
+                WriteLine('InnerFunc is called');
+            }
+
+            //Call nested function
+            InnerFunc();
+        }
+
+        //Function which will be executed on page Load (set on body load), we can consider it as our Main entry point
+        function MainFunction() {
+
+            var r; //declare a variable with type 'undefined'
+
+            //WriteLine is a custom function to print our messages on page
+            WriteLine('Going to call Sum without any parameter');
+            r = Sum();//Call Sum function, both a & b will have 'undefined' as value
+
+            WriteLine('Going to call Sum with one parameter');
+            r = Sum(10);//Call Sum function, 'a' will get 10 and 'b' will have 'undefined' as value
+            WriteLine('r:' + r);
+
+            WriteLine('Going to call Sum with two parameter');
+            r = Sum(10, 20)//Call Sum function, 'a' will get 10 and 'b' will get 20 as value
+            WriteLine('r:' + r);
+
+            WriteLine('Going to call Sum with three parameter');
+            r = Sum(10, 20, 30)//Call Sum function, 'a' will get 10 and 'b' will  get 20 as value, 30 will be ignored
+            WriteLine('r:' + r);
+
+            r = OuterFunc();//here r will contain 'undefined' as OuterFunc does not return anything
+
+            WriteLine("-----------OuterFunc ----------------");
+            WriteLine('typeof OuterFunc = ' + (typeof OuterFunc));//display type of 'OuterFunc' variable
+            WriteLine('OuterFunc.name = ' + OuterFunc.name);//The name of the function.
+            WriteLine('OuterFunc.caller = ' + OuterFunc.caller);//Specifies the function that invoked the currently executing function.
+            WriteLine('OuterFunc.length =' + OuterFunc.length); //Specifies the number of arguments expected by the function.
+            WriteLine('OuterFunc.toString() = ' + OuterFunc.toString()); //Returns a string representing the source code of the function.
+            WriteLine('OuterFunc.constructor = ' + OuterFunc.constructor); //Specifies the function that creates an object's prototype
+
+            WriteLine(r);//print result of 'OuterFunc()'
+
+            //Function name is just like a value and can be stored in other variable
+
+            var of = OuterFunc; //Now 'of' is also referencing to same function to which 'OuterFunc' was referencing
+
+            WriteLine('Going to call of');
+            of();//Call OuterFunc using 'of'
+
+            WriteLine("-----------OuterFunc ----------------");
+            WriteLine("---------------------------");
+
+            //Anonymous function, here function is stored in 'f' variable
+            var f = function (data) {
+                WriteLine('Anonymous function with data:' + data);
+            }
+
+            WriteLine("-----------f ----------------");
+            WriteLine('typeof f = ' + (typeof f));//display type of 'f' variable
+            WriteLine('f.name = ' + f.name);//The name of the function.
+            WriteLine('f.caller = ' + f.caller);//Specifies the function that invoked the currently executing function.
+            WriteLine('f.length =' + f.length); //Specifies the number of arguments expected by the function.
+            WriteLine('f.toString() = ' + f.toString()); //Returns a string representing the source code of the function.
+            WriteLine('f.constructor = ' + f.constructor); //Specifies the function that creates an object's prototype
+            
+            //Call function 'f' with some data
+            f("World");
+
+            WriteLine("-----------f ----------------");
+            WriteLine("---------------------------");
+
+            /*
+               -> Every 'function' is an object of type 'Function'. We can create function direclty by using 'Function' type
+               -> Last argument of 'Function' constructor takes body of function as string and all others are parameters
+            */
+            
+            //Create a function which takes two arguments and returns some of those
+            var func = new Function("a", "b", " var c = a+b; return c;");
+            WriteLine("-----------func ----------------");
+            WriteLine('typeof func = ' + (typeof func));//display type of 'func' variable
+            WriteLine('func.name = ' + func.name);//The name of the function.
+            WriteLine('func.caller = ' + func.caller);//Specifies the function that invoked the currently executing function.
+            WriteLine('func.length =' + func.length); //Specifies the number of arguments expected by the function.
+            WriteLine('func.toString() = ' + func.toString()); //Returns a string representing the source code of the function.
+            WriteLine('func.constructor = ' + func.constructor); //Specifies the function that creates an object's prototype
+
+            //Call function by using variable 'func'
+            r = func(10, 20);
+
+            WriteLine(r);
+
+            WriteLine("-----------func ----------------");
+            WriteLine("---------------------------");
+
+            //Create an anonymous function
+            var testfunc = function () {
+                WriteLine('This is Anonymous function created to pass as parameter to other function');
+            };
+
+            WriteLine('typeof testfunc = ' + (typeof testfunc));
+
+            WriteLine('----Call a function and pass another function as parameter to it-----');
+            //Call a function and pass another function as parameter to it
+            ExecuteFunction(testfunc);
+
+        }//End of MainFunction
+
+        function ExecuteFunction(f)
+        {
+            
+            //check if f is of type 'function'
+            if (typeof f == 'function') 
+            {
+                //Execute function 'f'
+                f();
+            }
+        }
+
+    </script>
+</head>
+
+<body onload="return MainFunction()">
+</body>
+
+</html>

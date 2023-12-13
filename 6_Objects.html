@@ -1,0 +1,168 @@
+<html>
+<head>
+    <title>JS - Objects - Practice</title>
+
+    <script type="text/javascript">
+
+        //Function which will be executed on page Load (set on body load), we can consider it as our Main entry point
+        function MainFunction() {
+
+            /*--------------------Objects-------------------------
+               -> In JS, there is no 'class or struct' construct to create a Class
+               -> Object is directly created and properties/functions are added
+               -> Object is like an associative Array
+               -> When a function is called by an object, 'this' keyword in that function refers to caller
+            */
+
+            /*------Object Data Type --------*/
+            var o = new Object(); //Creating Object without any property and methods
+
+            o.ID = 1; //Create a property 'ID' of type 'Number' and assign a value '1'
+            o.Name = "First"; //Create a property 'Name' of type 'String' and assign a value
+            o['Address'] = "Lahore"; //It is simlar to o.Address. (Objects are associative arrays)
+
+            //Create a property 'Show' which holds a 'function'
+            o.Show = function () {
+                //As this function is part of 'o', 'ID' will be searched first as local variable, then in 'calling' object members
+                WriteLine('this.ID =' + this.ID);
+            }
+
+            o["Get"] = GetName; //Create a property 'Get' and give to it a refernce of a named 'function'
+
+            //------------------- o --------------------------//
+            WriteLine('------------------- o --------------------------');
+            WriteLine('o.ID = ' + o.ID); //Show value of 'ID' property of 'o' object
+            WriteLine('o["Name"] = ' + o["Name"]); //Show value of 'Name' property of 'o' object
+            WriteLine('o.Address = ' + o.Address); //Show value of 'Name' property of 'o' object
+            WriteLine('o.Show() = ' + o.Show()); //Call 'Show' function and show return value
+            WriteLine('o.Get() = ' + o.Get()); //Call 'Get' function and show return value
+
+            //Call function by passing the object
+            DisplayObject(o);
+            WriteLine('------------------- o --------------------------');
+            WriteLine('---------------------------------------------');
+            //------------------- o --------------------------//
+
+            var oo = {}; //Object declaration by 'literal' notation
+
+            oo.ID = 2; //Create a property 'ID' of type 'Number' and assign a value '1'
+            oo.Name = "Second"; //Create a property 'Name' of type 'String' and assign a value
+
+            oo.Get1 = GetName; //Create a property 'Get' and give to it a refernce of a named 'function'
+
+            //------------------- oo --------------------------//
+            WriteLine('------------------- oo --------------------------');
+            WriteLine('oo.ID = ' + oo.ID); //Show value of 'ID' property of 'oo' object
+            WriteLine('oo["Name"] = ' + oo["Name"]); //Show value of 'Name' property of 'oo' object
+            WriteLine('oo.Address = ' + oo.Address); //Show value of 'Address' property of 'oo' object
+           // WriteLine('oo.Show() = ' + oo.Show()); //Call 'Show' function and show return value
+            WriteLine('oo.Get1() = ' + oo.Get1()); //Call 'Get1' function and show return valuee
+
+            //Call function by passing the object
+            DisplayObject(oo);
+            WriteLine('------------------- oo --------------------------');
+            WriteLine('---------------------------------------------');
+            //------------------- oo --------------------------//
+
+
+            //Create Object by 'literal' notation, with property 'ID' and a method member 'Show'
+            var ooo = {
+                ID: 3, //ID property
+                Show: function () { //Show function property
+
+                },//End of Show
+                Address: {
+                    City: 'Lahore',
+                    Country: 'Pakistan'
+                }//'Address' object as property of 'ooo' object
+            };//End of 'ooo' declaration
+
+            ooo.Name = "Third"; //Add another property 'Name' of type 'String' and assign a value
+            ooo.Get = GetName;
+
+            //------------------- ooo --------------------------//
+            WriteLine('------------------- ooo --------------------------');
+            WriteLine('ooo.ID = ' + ooo.ID); //Show value of 'ID' property 
+            WriteLine('ooo.Name = ' + ooo.Name); //Show value of 'Name' property 
+            WriteLine('ooo.Address.City = ' + ooo.Address.City); //Show value of 'City' property using 'Address' property
+            WriteLine('ooo["Show"]() = ' + ooo["Show"]()); //Call 'Show' function and show return value
+            WriteLine('ooo.Get() = ' + ooo.Get()); //Call 'Get' function and show return value
+
+            //Call function by passing the object
+            DisplayObject(ooo);
+            WriteLine('------------------- ooo --------------------------');
+            WriteLine('---------------------------------------------');
+            //------------------- ooo --------------------------//
+
+            //Here we are calling 'GetName' directly so this.Name will return 'undefined'
+            WriteLine('GetName() =  ' + GetName()); //Call 'Get' function and show return value
+            WriteLine('DisplayObject(5) =  ' + DisplayObject(5));
+
+
+            //Iterating all properties of an object
+            WriteLine('-------------Iterating properties of ooo--------------------------------');
+            for (var prop in ooo) {
+                WriteLine("ooo." + prop + " = " + ooo[prop]);
+            }
+            WriteLine('---------------------------------------------');
+        }
+
+        function GetName() {
+            //'this' is special keyword inside a function which refers to the 'caller object' of the function
+            return this.Name;
+        }
+
+        function DisplayObject(obj)
+        {
+
+            if (typeof obj != 'object') //check if obj is of type 'object'
+            {
+                WriteLine('---- provided parameter is not valid (not of object type)');
+                return false;
+            }
+
+
+            WriteLine("-------------------------DisplayObject Start------------------");
+            if (obj.ID != 'undefined') //It means ID property exists in obj
+            {
+                WriteLine('DisplayObject: ID is :' + obj.ID);
+                WriteLine('DisplayObject: ID is :' + obj['ID']);//As object is like associative array, members can be accessed like array elements
+            }
+
+            if (typeof obj.Name != 'undefined') //It means Name property exists in obj
+            {
+                WriteLine('DisplayObject: Name is :' + obj.Name);
+                WriteLine('DisplayObject: Name is :' + obj['Name']);//As object is like associative array, members can be accessed like array elements
+            }
+
+            if (typeof obj.Get != 'undefined') //It means Get property exists in obj
+            {
+                if (typeof obj.Get == 'function') //It means 'Get' is property of function type
+                {
+                    WriteLine('DisplayObject: Value by Get:' + obj.Get());
+
+                    //As object is like associative array, members can be accessed like array elements
+                    WriteLine('DisplayObject: Value by Get :' + obj['Get']());
+                }
+                
+            }
+
+            WriteLine("-------------------------DisplayObject End ------------------");
+        }
+        //A wrapper function to write every new line, this function returns 'undefined'
+        function WriteLine(str) {
+
+            //Write given data using 'document' 'writeln' function
+            document.writeln(str);
+
+            //Write '</br>' to insert a new line in HTML
+            document.write("</br>");
+        }
+
+    </script>
+</head>
+
+<body onload="return MainFunction()">
+</body>
+
+</html>

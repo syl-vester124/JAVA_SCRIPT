@@ -1,0 +1,140 @@
+<html>
+<head>
+    <title>JS - Data Types - Practice</title>
+
+    <script type="text/javascript">
+
+        //Variable declared (not in any function) lies in global (window) scope.
+        var g = 0;
+
+        //Function which will be executed on page Load (set on body load), we can consider it as our Main entry point
+        function MainFunction() {
+
+            //JavaScript is loosely typed language, it decides 'Data Type' based on provided data
+            //A variable declared in a function has a scope inside function
+
+
+            /*------Number Data Type --------*/
+            var n = 0; //Dynamic Type is 'Number'
+            var nn = new Number(); //Number but by using Number constructor
+            var nnn = new Number(20);//Number but by using Number constructor
+
+            //We have 'typeof' keyword to get 'type' of a variable
+            WriteLine('Type of n is: ' + typeof n);
+            WriteLine('Type of nn is: ' + typeof nn);
+            WriteLine('Type of nnn is: ' + typeof nnn);
+            WriteLine('----------------------------------');
+
+            /*------Boolean Data Type --------*/
+            var b = false; //Boolean
+            var bb = new Boolean(); //Boolean
+            var bbb = new Boolean(false);//Boolean
+
+            //We have 'typeof' keyword to get 'type' of a variable
+            WriteLine('Type of b is: ' + typeof b);
+            WriteLine('Type of bb is: ' + typeof bb);
+            WriteLine('Type of bbb is: ' + typeof bbb);
+            WriteLine('----------------------------------');
+
+
+            /*------String Data Type --------*/
+            var s = "  Hello world"; //String
+            var ss = new String();// String
+            var sss = new String("  Hello"); //String
+
+            //We have 'typeof' keyword to get 'type' of a variable
+            WriteLine('Type of s is: ' + typeof s);
+            WriteLine('Type of ss is: ' + typeof ss);
+            WriteLine('Type of sss is: ' + typeof sss);
+            WriteLine('----------------------------------');
+
+
+
+            /*------Null Data Type --------*/
+            var nu = null; // NULL
+
+            //We have 'typeof' keyword to get 'type' of a variable
+            WriteLine('Type of nu is: ' + typeof nu);
+            WriteLine('----------------------------------');
+
+
+            /*------Undefined Data Type --------*/
+            var uf; //variable is declared but its value is 'undefined'
+
+            //We have 'typeof' keyword to get 'type' of a variable
+            WriteLine('Type of uf is: ' + typeof uf);
+            WriteLine('----------------------------------');
+
+
+            
+            /*------undefined variable--------*/
+            //u;//u is not declared anywhere, so it is 'undefined'
+
+            //We have 'typeof' keyword to get 'type' of a variable
+            WriteLine('Type of u is: ' + typeof u);
+            WriteLine('----------------------------------');
+
+
+            /*------Object Data Type --------*/
+            var o = new Object(); //Object
+            var oo = {}; //Object declaration by 'literal' notation
+            var ooo = { ID: 1 };//Object declaration by 'literal' notation
+
+            //We have 'typeof' keyword to get 'type' of a variable
+            WriteLine('Type of o is: ' + typeof o);
+            WriteLine('Type of oo is: ' + typeof oo);
+            WriteLine('Type of ooo is: ' + typeof ooo);
+            WriteLine('----------------------------------');
+
+
+            /*------Array Data Type --------*/
+            var ar = new Array(); //Array
+            var arr = []; //Array declaration by 'literal' notation
+
+            //We have 'typeof' keyword to get 'type' of a variable
+            WriteLine('Type of ar is: ' + typeof ar); //it returns 'Object' even for array, we can use 'instanceof' instead
+            WriteLine('Type of arr is: ' + typeof arr);
+
+            WriteLine('ar instanceof Array: ' + (ar instanceof Array));
+            WriteLine('arr instanceof Array: ' + (arr instanceof Array));
+            WriteLine('arr instanceof Number: ' + (arr instanceof Number));
+            WriteLine('----------------------------------');
+
+
+            /*------Date Data Type --------*/
+            var d = new Date(); //Date
+            var dd = new Date("10/1/2014");//Date
+            var ddd = new Date(2014, 01, 17, 10, 59, 59);//Date
+            
+            //We have 'typeof' keyword to get 'type' of a variable
+            WriteLine('Type of d is: ' + typeof d);
+            WriteLine('Type of dd is: ' + typeof dd);
+            WriteLine('Type of ddd is: ' + typeof ddd);
+
+            WriteLine('d instanceof Date: ' + (d instanceof Date));
+            WriteLine('dd instanceof Date: ' + (dd instanceof Date));
+            WriteLine('ddd instanceof Number: ' + (ddd instanceof Number));
+
+            WriteLine('----------------------------------');
+
+            
+
+        }//End of MainFunction
+
+        //A wrapper function to write every new line, this function returns 'undefined'
+        function WriteLine(str) {
+
+            //Write given data using 'document' 'writeln' function
+            document.writeln(str);
+
+            //Write '</br>' to insert a new line in HTML
+            document.write("</br>");
+        }
+
+    </script>
+</head>
+
+<body onload="return MainFunction()">
+</body>
+
+</html>

@@ -1,0 +1,223 @@
+<html>
+<head>
+    <title>JS - Objects 3 - Inheritance Practice</title>
+
+
+    <script type="text/javascript">
+
+        var flag = false;
+
+        //Function which will be executed on page Load (set on body load), we can consider it as our Main entry point
+        function MainFunction() {
+
+            /*--------------------Objects-------------------------
+               -> In JS, there is no 'class or struct' construct to create a Class
+               -> Object is directly created and properties/functions are added
+               -> Object is like an associative Array
+               -> When a function is called by an object, 'this' keyword in that function refers to caller
+            */
+
+            /* Lets create a class here for a customer, Here 'function' construct is used to create a 
+             class like construct, we'll call such function as 'Employee' here.
+             Constructor in JS is a special function which is called with 'new' keyword, it does three things
+             1- Create an Object in memory
+             2- Call constructor function with newly created object ('this' refers to this object inside function)
+             3- returns 'this' automatically from constructor/function
+            */
+
+            //A JS class with parameterless constructor
+            function Employee(id, name) {
+                this.ID = id;
+                this.Name = name;
+            }//End of constructor function
+
+            //Functions should in prototype property
+            Employee.prototype.GetName = function () {
+                return this.Name;
+            }
+
+            WriteLine("------------Employee---------------------------------");
+            WriteLine('typeof Employee = ' + (typeof Employee));//display type of 'Employee'
+            WriteLine('Employee.name = ' + Employee.name);//The name of the function.
+            WriteLine('Employee.caller = ' + Employee.caller);//Specifies the function that invoked the currently executing function.
+            WriteLine('Employee.length =' + Employee.length); //Specifies the number of arguments expected by the function.
+            WriteLine('Employee.toString() = ' + Employee.toString()); //Returns a string representing the source code of the function.
+            WriteLine('Employee.constructor = ' + Employee.constructor); //Specifies the function that creates an object's prototype
+            WriteLine("--------------Employee.prototype-------------------------------");
+            WriteLine('Employee.prototype = ' + Employee.prototype);//shows what is in .prototype object
+            WriteLine('typeof Employee.prototype = ' + typeof Employee.prototype);//shows what is in .prototype object
+            WriteLine('Employee.prototype instanceof Employee = ' + (Employee.prototype instanceof Employee));
+            WriteLine('Employee.prototype instanceof Object = ' + (Employee.prototype instanceof Object));
+            WriteLine('Employee.prototype.constructor = ' + Employee.prototype.constructor);//shows constructor of 'prototype' object
+            WriteLine("---------------------------------------------");
+
+
+            //In JS, we've prototypal inheritance and for that we use 'prototype' property of the object
+            function Manager(id, name, desig) {
+                /*
+                Here we are doing our inheritance first part. We are calling parent class function with the 
+                context of current object by passing 'this' and required parameters to constructor if any
+                */
+                
+                Employee.call(this, id, name);
+                
+                //Create properties related to Manager class
+                this.Designation = desig;
+            }
+
+            //Here we are doing 2nd part of our inheritance, attaching Employee object with Manager prototype
+            Manager.prototype = new Employee();
+
+            //If we want to make sure that our prototype should show 'Manager' as constructor
+            Manager.prototype.constructor = Manager;
+
+            //Add functions related to Manager in Manager.prototype
+            Manager.prototype.GetPay = function () {
+                return 1000;
+            }
+
+
+            WriteLine("------------Manager---------------------------------");
+            WriteLine('typeof Manager = ' + (typeof Manager));//display type of 'Manager'
+            WriteLine('Manager.name = ' + Manager.name);//The name of the function.
+            WriteLine('Manager.caller = ' + Manager.caller);//Specifies the function that invoked the currently executing function.
+            WriteLine('Manager.length =' + Manager.length); //Specifies the number of arguments expected by the function.
+            WriteLine('Manager.toString() = ' + Manager.toString()); //Returns a string representing the source code of the function.
+            WriteLine('Manager.constructor = ' + Manager.constructor); //Specifies the function that creates an object's prototype
+            WriteLine("--------------Manager.prototype-------------------------------");
+            WriteLine('Manager.prototype = ' + Manager.prototype);//shows what is in .prototype object
+            WriteLine('typeof Manager.prototype = ' + typeof Manager.prototype);//shows what is in .prototype object
+
+            WriteLine('Manager.prototype instanceof Manager = ' + (Manager.prototype instanceof Manager));
+            WriteLine('Manager.prototype instanceof Object = ' + (Manager.prototype instanceof Object));
+
+            WriteLine('Manager.prototype.constructor = ' + Manager.prototype.constructor);//shows constructor of 'prototype' object
+
+            //__proto__ property exits with an object and its '.constructor' property 
+            WriteLine('Manager.prototype.__proto__ : ' + Manager.prototype.__proto__);
+
+            //.prototype.__proto__constructor shows the actual constructor property of 'prototype' object
+            WriteLine('Manager.prototype.__proto__.constructor : ' + Manager.prototype.__proto__.constructor);
+
+            WriteLine("---------------------------------------------");
+
+            
+
+            
+            //Create object of Manager
+            var m = new Manager(1, "Bilal", "Dev");//it will create an object with all these three properties
+            WriteLine('var m = new Manager(1, "Bilal", "Dev")');
+
+            WriteLine("--------------m-------------------------------");
+            WriteLine('m.constructor = ' + m.constructor);
+            //__proto__ property is representative of creater of object
+            WriteLine('m.__proto__ = ' + m.__proto__);
+            //__proto__.constructor property shows the actual create of this object
+            WriteLine('m.__proto__.constructor = ' + m.__proto__.constructor);
+            WriteLine('typeof m =' + typeof m);
+            WriteLine('m instanceof Manager = ' + (m instanceof Manager));
+            WriteLine('m instanceof Employee = ' + (m instanceof Employee));
+
+            WriteLine("---------------------------------------------");
+            /*
+            it will search inside 'm' first then in Manager.prototype (which is of Employee instance) then
+            it will search in Employee.prototype
+            */
+            WriteLine('m.GetName() = ' + m.GetName());
+            WriteLine('m.ID = ' + m.ID);
+            WriteLine('m.Name = ' + m.Name);
+            WriteLine('m.Designation = ' + m.Designation);
+            WriteLine('m.GetPay() = ' + m.GetPay());
+
+            WriteLine("---------------------------------------------");
+
+            //Another way of inheritance is to use Object.create() method
+            //create an object, inheriting from 'm' object
+            WriteLine('var m1 = Object.create(m)');
+            var m1 = Object.create(m);
+
+            WriteLine("-------------m1--------------------------------");
+            /*
+            it will search inside 'm'1 first then in Manager.prototype (which is of Employee instance) then
+            it will search in Employee.prototype
+            */
+            WriteLine('m1.constructor = ' + m1.constructor);
+            WriteLine('typeof m1 =' + typeof m1);
+            WriteLine('m1 instanceof Manager = ' + (m1 instanceof Manager));
+            WriteLine('m1 instanceof Employee = ' + (m1 instanceof Employee));
+            WriteLine('m1.GetName() = ' + m1.GetName());
+            WriteLine('m1.ID = ' + m1.ID);
+            WriteLine('m1.Name = ' + m1.Name);
+            WriteLine('m1.Designation = ' + m1.Designation);
+            WriteLine('m1.GetPay() = ' + m1.GetPay());
+
+            WriteLine("---------------------------------------------");
+
+
+            //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor
+            //Changing 'constructor' example
+
+            //Create a type here
+            function Type() { }
+
+            //Create an array which contains different type of data
+            var types = [
+                new Array(),
+                [],
+                new Boolean(),
+                true,             // remains unchanged
+                new Date(),
+                new Error(),
+                new Function(),
+                function () { },
+                Math,
+                new Number(),
+                1,                // remains unchanged
+                new Object(),
+                {},
+                new RegExp(),
+                /(?:)/,
+                new String(),
+                "test"            // remains unchanged
+            ];
+
+            WriteLine("------------------Changing Constructor---------------------------");
+            //iterate all elements of array
+            for (var i = 0; i < types.length; i++) {
+                //Set constructor with 'Type'
+                types[i].constructor = Type;
+
+                WriteLine('types[' + i + ']: ' + types[i]);
+                WriteLine('->typeof types[' + i + ']: ' + (typeof types[i]));
+                WriteLine('->types[' + i + '].constructor: ' + types[i].constructor);
+                WriteLine('->types[' + i + '] instanceof Type: ' + (types[i] instanceof Type));
+            }
+            WriteLine("---------------------------------------------");
+
+
+        }//End of MainFunction
+
+
+        //A wrapper function to write every new line, this function returns 'undefined'
+        function WriteLine(str) {
+            if (flag == true) {
+                flag = false;
+                str = "<span style='background-color:lightgrey'>" + str + "</span>";
+            }
+            else
+                flag = true;
+
+            //Write given data using 'document' 'writeln' function
+            document.writeln(str);
+
+            //Write '</br>' to insert a new line in HTML
+            document.write("</br>");
+        }
+
+    </script>
+</head>
+
+<body onload="return MainFunction()">
+</body>
+
+</html>

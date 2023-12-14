@@ -1,0 +1,150 @@
+<html>
+<head>
+    <title>JS - Objects 2 - Practice</title>
+
+    <script type="text/javascript">
+
+        //Function which will be executed on page Load (set on body load), we can consider it as our Main entry point
+        function MainFunction() {
+
+            /*--------------------Objects-------------------------
+               -> In JS, there is no 'class or struct' construct to create a Class
+               -> Object is directly created and properties/functions are added
+               -> Object is like an associative Array
+               -> When a function is called by an object, 'this' keyword in that function refers to caller
+            */
+
+            /* Lets create a class here for a customer, Here 'function' construct is used to create a 
+             class like construct, we'll call such function as 'constructor' here.
+             Constructor in JS is a special function which is called with 'new' keyword, it does three things
+             1- Create an Object in memory
+             2- Call constructor function with newly created object ('this' refers to this object inside function)
+             3- returns 'this' automatically from constructor/function
+            */
+
+            //A JS class with parameterless constructor
+            function Customer()
+            {
+                this.ID = 0;
+                this.Name = "";
+                this.GetID = function () {
+                    return this.ID;
+                };
+            }//End of constructor function
+
+            //Lets create an object by using above constructor
+            var c = new Customer();// here new will perform three things as explained above, c will hold reference to newly created object
+            
+            WriteLine('c.GetID() = ' + c.GetID());
+
+            //If we'll call Customer function without new, it will be normal function execution
+            var c1 = Customer();//As function is not returning anything explicity, it is returning undefined
+
+
+            //Paramterized constructor
+            function Employee(id, name)
+            {
+                this.ID = id;
+                this.Name = name;
+            }
+            //Create employee object by providing parameter to constructor
+
+            WriteLine("---------------------------------------------");
+            var e = new Employee(1, 'Bilal');
+            WriteLine('e.Name = ' + e.Name);
+
+            WriteLine('typeof e = ' + (typeof e));//display type of 'e' variable
+            WriteLine('typeof Employee = ' + (typeof Employee));//display type of 'Employee'
+            WriteLine('Employee.name = ' + Employee.name);//The name of the function.
+            WriteLine('Employee.caller = ' + Employee.caller);//Specifies the function that invoked the currently executing function.
+            WriteLine('Employee.length =' + Employee.length); //Specifies the number of arguments expected by the function.
+            WriteLine('Employee.toString() = ' + Employee.toString()); //Returns a string representing the source code of the function.
+            WriteLine('Employee.constructor = ' + Employee.constructor); //Specifies the function that creates an object's prototype
+            WriteLine('e.constructor = ' + e.constructor); //Specifies the function that creates an object's prototype
+            WriteLine('Employee.prototype = ' + Employee.prototype);
+            WriteLine("---------------------------------------------");
+
+
+            //If a function is expecting to be called by an 'object' and that function is not part of that object, we can even call it
+            //we can use 'call' or 'apply' functions available in 'Function.prototype'
+            //we'll pass the 'object' for which context, we want to call the function
+            //in this case we are saying call 'GetName' function as it is part of 'e' and we are calling it like e.GetName()
+            WriteLine('GetName.call(e,1,0,2) = ' + GetName.call(e,1,0,2));//first argument is object, remaining will the parameters required by 'GetName'
+            WriteLine('GetName.apply(e,[1,0,2]) = ' + GetName.apply(e,[1,0,2]));//first argument is object, second is array of arguments required by 'GetName'
+
+
+            /*
+            Here Customer or Employee (name of functions) are also Objects of type 'Function, we can add properties to it
+            but it will not have anything to do with objects created by using these functions as constructors
+            */
+
+            Customer.Globals = {Name:'Shahzad'}
+            WriteLine('Customer.Globals.Name = ' + Customer.Globals.Name);
+
+            /*
+            To create functions to be accessible by all objects, we can use <function>.prototype property
+            How a member is searched when accessed by an object
+            1- It is first searched inside that 'object', if it is not found
+            2- It is then searched in (constructor of that object).prototype object, if it is not found here
+            3- It is then searched in (constructor of that object).prototype object and so on until we reaches prototype = null
+            */
+            WriteLine("---------------------------------------------");
+            WriteLine('Employee.prototype = ' + Employee.prototype);
+            WriteLine('Object.prototype = ' + Object.prototype);
+            WriteLine("---------------------------------------------");
+
+            Employee.prototype.Department = "Test";
+            Employee.prototype.Name = "T Name";
+            Employee.prototype.Show = function () { };
+
+            var e1 = new Employee(2, 'Bilal 1');
+
+            //prototype for instances of 'Employee' will be <instance constructor>.prototype property
+            //e.g. for e1, 'constructor' of e1 is 'Employee', so prototype for e1 will be 'Employee.prototype' object
+
+            WriteLine('e.ID =' + e.ID); //It will search in 'e' first and it is found so will show value
+            WriteLine('e.Name =' + e.Name); //It will search in 'e' first and it is found so will show value, prototype value will be 'overshadowed'
+            WriteLine('e.Department =' + e.Department); //It will search in 'e' first, not found, it will search in prototype
+
+            WriteLine('e1.ID =' + e1.ID); //It will search in 'e1' first and it is found so will show value
+            WriteLine('e1.Name =' + e1.Name); //It will search in 'e1' first and it is found so will show value, prototype value will be 'overshadowed'
+            WriteLine('e1.Department =' + e1.Department); //It will search in 'e1' first, not found, it will search in prototype
+            WriteLine('Employee.Department =' + Employee.Department);//when tried to access a property with function object, it will searches inside first, if not found, then its searches in prototype of its 'constructor's prototype
+            
+
+
+            /* toString() function will be searched first inside 'e1' .... Not Found
+              then <e1 constructor>.prototype object .... Not Found ---- here <e1 constructor> is 'Employee'
+              then search (<e1 constructor>.prototype object's constructor is 'Object').Prototype and this has 'toString()' function
+              and base calls 'Object' toString() function just prints the typeof 'object' with which it is called
+            */
+
+            WriteLine('e1.toString() = ' + e1.toString());
+            WriteLine("---------------------------------------------");
+
+            
+
+
+        }//End of MainFunction
+
+        function GetName(a,b,c) {
+            //'this' is special keyword inside a function which refers to the 'caller object' of the function
+            return this.Name;
+        }
+
+        //A wrapper function to write every new line, this function returns 'undefined'
+        function WriteLine(str) {
+
+            //Write given data using 'document' 'writeln' function
+            document.writeln(str);
+            //Write '</br>' to insert a new line in HTML
+            document.write("</br>");
+        }
+
+    </script>
+</head>
+
+<body onload="return MainFunction()">
+</body>
+
+</html>

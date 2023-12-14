@@ -1,0 +1,62 @@
+<html>
+<head>
+    <title>Enums - Practice</title>
+
+    <script type="text/javascript">
+
+        //JavaScript doesn't have any construct for 'Enums' as we have in C#
+        //but we can fake this behaviour by using objects
+
+        var Enums = {}; //Lets create an object which will hold our enums
+
+        //Create a property (which is our enum), this will contain more properties to represent our enum values
+        Enums.FormTypes = {
+            None: 0,
+            Entry: 1,
+            Edit: 2,
+            Delete: 3,
+            List: 4
+        };
+
+
+        //Function which will be executed on page Load (set on body load), we can consider it as our Main entry point
+        function MainFunction() {
+
+            CheckFormType(Enums.FormTypes.Delete);
+            CheckFormType(Enums.FormTypes.Entry);
+            CheckFormType(Enums.FormTypes.None);
+
+        }//End of MainFunction
+
+        //Create a testing function which shows different messages based on provided type
+        function CheckFormType(type)
+        {
+            if (type == Enums.FormTypes.Entry)
+            {
+                WriteLine('Entered');
+            }
+            else if (type == Enums.FormTypes.Delete) {
+                WriteLine('Deleted mode');
+            }
+            else {
+                WriteLine('Other than Entered/Deleted');
+            }
+        }
+
+        //A wrapper function to write every new line, this function returns 'undefined'
+        function WriteLine(str) {
+
+            //Write given data using 'document' 'writeln' function
+            document.writeln(str);
+
+            //Write '</br>' to insert a new line in HTML
+            document.write("</br>");
+        }
+
+    </script>
+</head>
+
+<body onload="return MainFunction()">
+</body>
+
+</html>

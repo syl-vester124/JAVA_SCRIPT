@@ -1,0 +1,102 @@
+<html>
+<head>   
+    <script src="jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            var IntervalVar = null;
+
+            function timehandler() {
+                var timddata = jQuery("#timedependent span").text();
+                
+                var str = timddata;
+                var arr = str.split("S:");
+                str = arr[0];
+                var sec = parseInt(arr[1]);
+                arr = str.split("M:");
+                str = arr[0];
+                var min = parseInt(arr[1]);
+                arr = str.split("H:");
+                str = arr[0];
+                var hour = parseInt(arr[1]);
+                arr = str.split("D:");
+                str = arr[0];
+                var day = parseInt(arr[1]);
+
+                if (isNaN(day))
+                    day = 0;
+
+                console.log(day);
+
+                if (day == 0 && hour == 0 && min == 0 && sec == 0) {
+                    if(intervalVar)
+                        clearInterval(intervalVar);
+
+                    var str1 = "Auction Ended";
+                    jQuery("#timedependent span").text(str1);
+                    return;
+                }
+
+                sec = sec - 1;
+
+                if (sec < 0) {
+
+                    min = min - 1;
+
+                    if (min < 0) {
+
+                        hour = hour - 1;
+
+                        if (hour < 0) {
+
+                            if (day > 0) {
+                                day = day - 1;
+                            }//end of day
+
+                        }//end of hour == 0
+                    }//end of min ==0
+                }//end of sec ==0
+
+
+                if (sec < 0) {
+                    sec = 4;
+                }
+
+                if (min < 0) {
+                    min = 2;
+                }
+                if (hour < 0 && day >= 0) {
+                    hour = 2;
+                }
+
+                if (day == undefined || day < 0) {
+                    day = '0';
+                }
+
+                if (day == 0 || isNaN(day)) {
+
+                    var str1 = " H:" + hour + " M:" + min + " S:" + sec;
+                    jQuery("#timedependent span").text(str1);
+
+                }
+
+                else {
+                    var str1 = "D:" + day + " H:" + hour + " M:" + min + " S:" + sec;
+                    jQuery("#timedependent span").text(str1);
+                }
+
+            };
+
+            intervalVar = setInterval(timehandler, 1000);
+
+        });
+    </script>
+</head>
+<body>
+    <ul>
+        <li id="timedependent">
+            <span>D:1 H:1 M:1 S:3</span>
+        </li>
+    </ul>
+
+</body>
+</html>
